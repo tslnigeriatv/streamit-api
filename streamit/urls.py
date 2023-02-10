@@ -11,7 +11,6 @@ admin.site.index_title  =  "DASHBOARD"
 
 urlpatterns = [
     path('', home, name='home'),
-    # path("browse/", include("frontend.urls")),
     path('activate/<str:uid>/<str:token>/', activate_account, name="activate-account"),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),

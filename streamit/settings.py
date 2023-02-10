@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'social_django',
     'drf_social_oauth2',
     'api',
-    'frontend',
 ]
 
 
