@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation</title>
+</head>
+<body>
+
+    
+    <p>{{uid}}</p>
+    <p>{{token}}</p>
+    <div class="message"></div>
+    <form class="form">
+        <button id="activate">Activate Account</button>
+    </form>
+
+    <form class="resend-activation-form">
+        <input type="text" id="email" class="">
+        <button id="resend-activation">Resend Activation Link</button>
+    </form>
+
+    <script>
+        // Activate Account
+        document.querySelector("#activate").onclick = (e) =>{
+            e.preventDefault();
+            const options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({"token": "{{token}}", "uid": "{{uid}}"}),
+            };
+
+            fetch('https://web-production-93c3.up.railway.app/auth/users/activation/', options)
+                .then(response => {
+                    response.json()
+                    if (response.status === 204){
+                        document.querySelector(".message").innerHTML = "Your Account has been successfully activated!"
+                    } else {
+                        document.querySelector(".message").innerHTML = "We encountered a problem activating your account"
+                    }
+                })
+                .then(response => console.log(response))
+                .catch(err => console.error(err));
+        }
+
+        // Resend link
+        document.querySelector("#resend-activation").onclick = (e) =>{
+            e.preventDefault();
+            const email = document.querySelector("#email").value
+            const options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({"email": email}),
+            };
+
+            console.log(email)
+
+            fetch('https://web-production-93c3.up.railway.app/auth/users/resend_activation/', options)
+                .then(response => {
+                    response.json()
+                    if (response.status === 204){
+                        document.querySelector(".message").innerHTML = "Another email was sent to your address!"
+                    } else {
+                        document.querySelector(".message").innerHTML = "It seems your account is already activated or there is no user with this email..."
+                    }
+                })
+                .then(response => console.log(response))
+                .catch(err => console.error(err));
+        }
+
+
+
+        
+    </script>
+</body>
+</html>
