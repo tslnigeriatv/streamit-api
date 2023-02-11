@@ -300,7 +300,7 @@ class DirectorViewSet(viewsets.ModelViewSet):
     
 @api_view(['GET'])
 def home(request):
-    return Response({"details": "Welcome to Streamit API"})
+    return render(request, 'index.html', {})
     
 @api_view(['GET', 'POST'])
 def activate_account(request, uid, token):
@@ -309,7 +309,5 @@ def activate_account(request, uid, token):
         "uid": uid,
         "token": token
     })
-    
-    # return Response({"uid": f"{uid}", "token": f"{token}"})
     
     
