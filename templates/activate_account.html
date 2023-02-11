@@ -185,6 +185,7 @@
                     if (response.status === 204){
                         document.querySelector(".message").innerHTML = "Your Account has been successfully activated!"
                         activated.style.display = "none"
+                        unactivated.style.display = "block"
                     } else {
                         comnsole.log(response.status)
                         document.querySelector("#message-unactivated").innerHTML = "We encountered a problem activating your account"
