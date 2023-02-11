@@ -118,6 +118,8 @@
 
     <!-- Reset Password -->
     <div class="h-screen w-screen bg-black flex justify-center items-center text-center flex-col text-white px-6 static">
+        <p class="text-white">{{uid}}</p>
+        <p class="text-white">{{token}}</p>
         <!-- Activated Account -->
         <form id="activated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
             <div class="flex flex-col items-center justify-center gap-[27px] mx-6">
@@ -183,9 +185,8 @@
                 .then(response => {
                     response.json()
                     if (response.status === 204){
-                        document.querySelector(".message").innerHTML = "Your Account has been successfully activated!"
-                        activated.style.display = "none"
-                        unactivated.style.display = "block"
+                        unactivated.style.display = "none"
+                        activated.style.display = "block"
                     } else {
                         comnsole.log(response.status)
                         document.querySelector("#message-unactivated").innerHTML = "We encountered a problem activating your account"
