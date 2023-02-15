@@ -5,6 +5,8 @@ from typing import Any
 from rest_framework.views import Response
 
 
+
+
 def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Response:
     """Custom API exception handler."""
 
