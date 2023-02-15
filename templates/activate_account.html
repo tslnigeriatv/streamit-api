@@ -11,61 +11,6 @@
     {% extends "_base.html" %}
     {% load static %}
 
-        <p>{{uid}}</p>
-        <p>{{token}}</p>
-        <div class="message"></div>
-        <form class="form">
-            <button id="activate">Activate Account</button>
-        </form>
-
-        <form class="resend-activation-form">
-            <input type="text" id="email" class="">
-            <button id="resend-activation">Resend Activation Link</button>
-        </form>
-
-
-        <!-- Activated Account -->
-        <form id="activated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
-            <div class="flex flex-col items-center justify-center gap-[27px] mx-6">
-                
-                <div class="flex flex-col items-center justify-center gap-4">
-                    <img class="w-[50px] h-[50px] md:h-[60px] md:w-[60px]" src="{% static 'images/check.png' %}" alt="">
-                    <div>
-                        <h2 class="text-xl md:text-2xl mb-2">Activate Account</h2>
-                        <div class="text-gray-600 text-sm">
-                            Your account has been successfully activated.
-                        </div>
-                    </div>
-                    
-                </div>
-            
-            </div>
-        </form>
-
-        <!-- Unactivated Account -->
-        <form id="unactivated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
-            <div class="flex flex-col items-center justify-center gap-[27px] mx-6">
-                
-                <div class="flex flex-col items-center justify-center gap-4">
-                    <img class="w-[50px] h-[50px] md:h-[60px] md:w-[60px]" src="{% static 'images/power.png' %}" alt="">
-                    <div>
-                        <h2 class="text-xl md:text-2xl mb-2">Activate Account</h2>
-                        <div class="text-gray-600 text-sm">
-                            To proceed, you might need to activate your account.
-                        </div>
-                    </div>
-                    
-                </div>
-                <button 
-                    id="button"
-                    class="text-black text-sm md:text-lg  bg-[#80D200] hover:bg-[#89d214] px-[15px] py-[13px] md:px-[17px] md:py-[15px] w-full rounded-md "
-                >Activate</button>
-            </div>
-        </form>
-
-
-        
-
         <!-- Change Password -->
         <form class="h-screen w-screen bg-black flex justify-center items-center text-center flex-col text-white px-6 static xl:relative">
             <div class="w-screen md:w-[523px] h-[317px] static xl:absolute xl:top-[219px] xl:left-[459px] bg-black flex flex-col text-left">
@@ -111,6 +56,34 @@
             </div>
         </div>
     </form>
+
+    <!-- Change Password -->
+    <form class="h-screen w-screen bg-black flex justify-center items-center text-center flex-col text-white px-6 static xl:relative">
+        <div class="w-screen md:w-[523px] h-[317px] static xl:absolute xl:top-[219px] xl:left-[459px] bg-black flex flex-col text-left">
+            <div class="w-screen md:w-[515px] mx-auto flex flex-col gap-7 p-2">
+                <div class="flex flex-col gap-2">
+                    <h2 class="text-xl">Login with your new password</h2>
+                    <p class="text-sm text-gray-600">Change your password and login</p>
+                </div>
+
+                <div class="bg-[#121212] h-[50px] hover:outline-none overflow-hidden rounded-[5px]">
+                    <input autocomplete="off" id="password1" name="password1" type="password" class="w-full h-full border-none outline-none bg-transparent text-gray-600" placeholder="New Password" class="">
+                </div>
+
+                <div class="bg-[#121212] h-[50px] hover:outline-none overflow-hidden rounded-[5px]">
+                    <input autocomplete="off" id="password2" name="password2" type="password" class="w-full h-full border-none outline-none bg-transparent text-gray-600" placeholder="Confirm Password" class="">
+                </div>
+
+                <div class="bg-[#121212] h-[50px] hover:outline-none overflow-hidden rounded-[5px]">
+                    <input autocomplete="off" id="email" name="email" type="email" class="w-full h-full border-none outline-none bg-transparent text-gray-600" placeholder="Email" class="">
+                </div>
+                
+                <div class="w-full text-center text-black h-[50px] overflow-hidden rounded-[5px]">
+                    <button id="resetBtn" class="w-full border-none bg-[#80D200] h-full">Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
     
         
 
@@ -118,10 +91,8 @@
 
     <!-- Reset Password -->
     <div class="h-screen w-screen bg-black flex justify-center items-center text-center flex-col text-white px-6 static">
-        <p class="text-white">{{uid}}</p>
-        <p class="text-white">{{token}}</p>
         <!-- Activated Account -->
-        <form id="activated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
+        <div id="activated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
             <div class="flex flex-col items-center justify-center gap-[27px] mx-6">
                 
                 <div class="flex flex-col items-center justify-center gap-4">
@@ -135,12 +106,17 @@
                     </div>
                     
                 </div>
+
+                <a 
+                    href="#"
+                    class="text-black text-sm md:text-lg inline-block  bg-[#80D200] hover:bg-[#89d214] px-[15px] py-[13px] md:px-[17px] md:py-[15px] w-full rounded-md "
+                >Login</a>
             
             </div>
-        </form>
+        </div>
 
-         <!-- Unactivated Account -->
-         <form id="unactivated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
+        <!-- Unactivated Account -->
+        <div id="unactivated" class="bg-[#0A0A0B] w-full h-[350px] md:w-[500px] md:h-[352px] flex-col flex items-center justify-center">
             <div class="flex flex-col items-center justify-center gap-[27px] mx-6">
                 
                 <div class="flex flex-col items-center justify-center gap-4">
@@ -158,7 +134,7 @@
                     class="text-black text-sm md:text-lg  bg-[#80D200] hover:bg-[#89d214] px-[15px] py-[13px] md:px-[17px] md:py-[15px] w-full rounded-md "
                 >Activate</button>
             </div>
-        </form>
+        </div>
     </div>
 
     
@@ -170,6 +146,7 @@
         const unactivated = document.querySelector("#unactivated");
 
         activated.style.display = "none"
+        unactivated.style.display = "flex"
 
         
         // Activate Account
@@ -178,18 +155,19 @@
             const options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({"token": "{{token}}", "uid": "{{uid}}"}),
+                body: JSON.stringify({token: "{{token}}", uid: "{{uid}}"}),
             };
 
-            fetch('https://web-production-c1bd.up.railway.app/auth/users/activation/', options)
+            fetch('https://web-production-93c3.up.railway.app/auth/users/activation/', options)
                 .then(response => {
                     response.json()
                     if (response.status === 204){
                         unactivated.style.display = "none"
-                        activated.style.display = "block"
+                        activated.style.display = "flex"
                     } else {
                         comnsole.log(response.status)
                         document.querySelector("#message-unactivated").innerHTML = "We encountered a problem activating your account"
+                        unactivated.style.display = "flex"
                     }
                 })
                 .then(response => console.log(response))

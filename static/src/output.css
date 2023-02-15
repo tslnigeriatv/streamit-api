@@ -854,6 +854,10 @@ input[type="range"]::-ms-fill-lower {
   display: block;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .flex {
   display: flex;
 }
@@ -958,6 +962,11 @@ input[type="range"]::-ms-fill-lower {
   background-color: transparent;
 }
 
+.bg-red-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(119 29 29 / var(--tw-bg-opacity));
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -1008,6 +1017,11 @@ input[type="range"]::-ms-fill-lower {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-red-900 {
+  --tw-text-opacity: 1;
+  color: rgb(119 29 29 / var(--tw-text-opacity));
 }
 
 .underline {

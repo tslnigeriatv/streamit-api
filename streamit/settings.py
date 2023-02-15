@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'corsheaders',
     "webpack_loader",
     'cloudinary',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',
     'rest_framework.authtoken',
+    'dj_rest_auth',
     'djoser',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
@@ -99,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
             ],
@@ -112,26 +115,31 @@ WSGI_APPLICATION = 'streamit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'D4imfMoVODfTck00VEWD',
-#         'HOST': 'containers-us-west-43.railway.app',
-#         'PORT': '6946',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'D4imfMoVODfTck00VEWD',
+        'HOST': 'containers-us-west-43.railway.app',
+        'PORT': '6946',
+    }
+}
+
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = [
     "DELETE",
@@ -219,8 +227,10 @@ AUTHENTICATION_BACKENDS = [
     # Others auth providers (e.g. Google, OpenId, etc)
 
     # Facebook OAuth2
-    'social_core.backends.facebook.FacebookAppOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.facebook.FacebookAppOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    'api.facebook.CustomFacebookOAuth2',
+    # 'api.google.GoogleOAuth2',
     
     # Google OAuth2
     'social_core.backends.google.GoogleOAuth2',
@@ -246,10 +256,15 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 # Google configuration
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1039516402443-5r3sndc142b6jj8cklj1hu6fqu448kaq.apps.googleusercontent.com'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1039516402443-522feng3uud7h8gvc936133biv5s4k61.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "1039516402443-ogvmjrurbgea3nj2sdsrlv0n18vnbtie.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
+
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1039516402443-ogvmjrurbgea3nj2sdsrlv0n18vnbtie.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
+
 
 # Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
@@ -276,7 +291,7 @@ SIMPLE_JWT = {
     'JWK_URL': None,
     'LEEWAY': 0,
 
-    'AUTH_HEADER_TYPES': ('JWT',),
+    'AUTH_HEADER_TYPES': ('JWT', 'Bearer'),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
@@ -295,11 +310,20 @@ SIMPLE_JWT = {
 
 
 SIMPLE_JWT = {
-    'AUTH_HEADER_TYPES': ('JWT',),
+    'AUTH_HEADER_TYPES': ('JWT', 'Bearer'),
 }
 
 #  'https://auth.expo.io/@Chriscodedev/tslstream'
-white_list = ['http://localhost:3000/browse',]
+white_list = [
+    'http://localhost:8000/api/profile',
+    'http://localhost:8000/api/temporary-redirect-for-testing/',
+    'http://localhost:8000/social/auth/o/google-oauth2',
+    'https://web-production-93c3.up.railway.app/api/profile',
+    'https://web-production-93c3.up.railway.app/social/auth/o/google-oauth2',
+    'https://web-production-93c3.up.railway.app/api/temporary-redirect-for-testing/',
+    
+    
+]
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
@@ -311,6 +335,7 @@ DJOSER = {
     'SET_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': white_list,
@@ -330,10 +355,12 @@ DJOSER = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT =  587 # 465  
-EMAIL_HOST_USER ='talk2peteresezobor@gmail.com'
+EMAIL_HOST_USER ='petercodercoder@gmail.com'
 EMAIL_HOST_PASSWORD = 'dnjnrurjsvhycnok'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
 
 
 # Internationalization

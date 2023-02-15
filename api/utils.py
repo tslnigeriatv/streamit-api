@@ -3,6 +3,7 @@
 def all_videos(videos):
     my_videos = [{
         "id": video.id, 
+        "title": video.title,
         "video_link": video.video_link,
         "category": video.category.name,
         "age_rating": video.rating,
@@ -21,3 +22,4 @@ def all_videos(videos):
     } for video in videos]
 
     return my_videos
+

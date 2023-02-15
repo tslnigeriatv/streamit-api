@@ -1,4 +1,7 @@
-from rest_framework.response import Response 
+import requests as py_requests
+import json
+from rest_framework.response import Response
+from django.views import View
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -27,6 +30,8 @@ from .serializers import (
     PlayListSerializer,
     DirectorSerializer
 )
+
+from .utils import all_videos
 
 
 from rest_framework import viewsets
@@ -225,10 +230,10 @@ def like_video(request, *args, **kwargs):
             user = get_object_or_404(User, pk=user_id)
             if hasId(video.video_like.all(), user_id):
                 video.video_like.remove(user)
-                return Response({"detail": f"{user.email} unliked {video.title}"})
+                return Response({"detail": f"{user.email} unliked {video.title}", "liked": False})
             else:
                 video.video_like.add(user)
-                return Response({"detail": f"{user.email} liked {video.title}"})
+                return Response({"detail": f"{user.email} liked {video.title}", "liked": True})
         except:
             return Response({"details": "Invalid video_id and user_id"})
     
@@ -237,7 +242,7 @@ def like_video(request, *args, **kwargs):
 
 # Favourites functionality
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def favourite_video(request, *args, **kwargs):
 
     profile_id = request.data.get('profile_id', None)
@@ -249,14 +254,32 @@ def favourite_video(request, *args, **kwargs):
             profile = get_object_or_404(Profile, pk=int(profile_id))
             if hasId(video.favourites.all(), profile_id):
                 video.favourites.remove(profile)
-                return Response({"detail": f"{profile.user.email} removed {video.title} from list"})
+                return Response({"detail": f"{profile.user.email} removed {video.title} from list", "favourites": False})
             else:
                 video.favourites.add(profile)
-                return Response({"detail": f"{profile.user.email} added {video.title} to list"})
+                return Response({"detail": f"{profile.user.email} added {video.title} to list", "favourites":True})
         except:
             return Response({"details": "Invalid video_id and profile_id"})
     
     return Response({"details": "Profile Id or Video Id cannot be null"})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def top_trending(request):
+    if request.method == 'GET':
+        videos = Video.objects.all()
+        
+        video_list = all_videos(videos)
+        
+        def get_likes(video):
+            return video.get("likes")
+        
+        video_list.sort(key=get_likes, reverse=True)
+        
+        return Response(video_list)
+    else:
+        return Response([])
 
 
 class VideoViewSet(viewsets.ModelViewSet):
@@ -310,4 +333,54 @@ def activate_account(request, uid, token):
         "token": token
     })
     
+
+def reset_password_confirm(request, uid, token):
+    return render(request, 'reset_password_confirm.html', {
+        "uid": uid,
+        "token": token
+    })
+
+
+def reset_password_email(request):
+    return render(request, 'reset_password_email.html', {})
+
+
+# class RedirectSocial(View):
+
+#     def get(self, request):
+#         code, state = str(request.GET['code']), str(request.GET['state'])
+#         json_obj = {'code': code, 'state': state}
+#         print(json_obj)
+#         return JsonResponse(json_obj)
+
+
+@api_view(['GET'])
+def redirect_socials(request):
+    if (request.GET.get('code')) and str(request.GET.get('state')):
+        code, state = str(request.GET.get('code')), str(request.GET.get('state'))
+        json_obj = {"code": code, "state": state}
+        scheme = request.is_secure() and "https" or "http"
+        host = f'{scheme}://{request.get_host()}/social/auth/o/google-oauth2/'
+        
+        print(host)
+        
+        # path = f'{host}/social/auth/o/google-oauth2/'
+        
+        # url = request.
+        
+        
+        response = py_requests.post(host, data=json_obj)
+        my_session = request.session._get_or_create_session_key()
+        
+        print("MY_SESSION ", my_session)
+        
+        # print(json_obj)
+        return Response(json_obj)
+    else:
+        return Response({'code': '', 'state': ''})
     
+
+
+
+
+
