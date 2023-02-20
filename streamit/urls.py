@@ -28,9 +28,9 @@ urlpatterns = [
     # Oauth for social logins
     path('oauth/', include('drf_social_oauth2.urls', namespace='drf')),
     
-    path('social/auth/', include('djoser.social.urls')),
-    
-    
+    # path('social/auth/', include('djoser.social.urls')),
+    path('socials-auth/', include('social_auth.urls')),
+
     # Dummy Account for social test
     path('accounts/', include('accounts.urls')),
 ]

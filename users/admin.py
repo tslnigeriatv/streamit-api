@@ -16,10 +16,11 @@ class CustomUserAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}
-         ),
+        ),
     )
     search_fields = ('email',)
     ordering = ('email',)
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+# Did not customize the user display here... 
+admin.site.register(CustomUser)
