@@ -30,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["*", "web-production-93c3.up.railway.app"]
+ALLOWED_HOSTS = ["*", "web-production-de75.up.railway.app"]
 
 # Application definition
 
@@ -318,9 +318,9 @@ white_list = [
     'http://localhost:8000/api/profile',
     'http://localhost:8000/api/temporary-redirect-for-testing/',
     'http://localhost:8000/social/auth/o/google-oauth2',
-    'https://web-production-93c3.up.railway.app/api/profile',
-    'https://web-production-93c3.up.railway.app/social/auth/o/google-oauth2',
-    'https://web-production-93c3.up.railway.app/api/temporary-redirect-for-testing/',
+    'https://web-production-de75.up.railway.app/api/profile',
+    'https://web-production-de75.up.railway.app/social/auth/o/google-oauth2',
+    'https://web-production-de75.up.railway.app/api/temporary-redirect-for-testing/',
     
     
 ]
