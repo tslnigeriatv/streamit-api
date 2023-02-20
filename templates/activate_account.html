@@ -166,13 +166,16 @@
 
         const csrftoken = getCookie('csrftoken')
 
+        let token = "{{token}}"
+        let uid =  "{{uid}}"
+
         // Activate Account
         document.querySelector("#activate-button").onclick = (e) =>{
             e.preventDefault();
             const options = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken},
-                body: JSON.stringify({token: "{{token}}", uid: "{{uid}}"}),
+                body: JSON.stringify({token, uid}),
             };
 
             fetch('/auth/users/activation/', options)
