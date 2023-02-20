@@ -123,15 +123,28 @@ WSGI_APPLICATION = 'streamit.wsgi.application'
 #     }
 # }
 
+# My database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'D4imfMoVODfTck00VEWD',
+#         'HOST': 'containers-us-west-43.railway.app',
+#         'PORT': '6946',
+#     }
+# }
 
+
+# TSL Nigeria
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'D4imfMoVODfTck00VEWD',
-        'HOST': 'containers-us-west-43.railway.app',
-        'PORT': '6946',
+        'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
+        'HOST': 'containers-us-west-141.railway.app',
+        'PORT': '7108',
     }
 }
 
