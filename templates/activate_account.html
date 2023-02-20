@@ -148,17 +148,34 @@
         activated.style.display = "none"
         unactivated.style.display = "flex"
 
-        
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getCookie('csrftoken')
+
         // Activate Account
         document.querySelector("#activate-button").onclick = (e) =>{
             e.preventDefault();
             const options = {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json', 'X-CSRFToken': csrftoken},
                 body: JSON.stringify({token: "{{token}}", uid: "{{uid}}"}),
             };
 
-            fetch('https://web-production-93c3.up.railway.app/auth/users/activation/', options)
+            fetch('/auth/users/activation/', options)
                 .then(response => {
                     response.json()
                     if (response.status === 204){
@@ -188,7 +205,7 @@
 
         //     console.log(email)
 
-        //     fetch('https://web-production-93c3.up.railway.app/auth/users/resend_activation/', options)
+        //     fetch('/auth/users/resend_activation/', options)
         //         .then(response => {
         //             response.json()
         //             if (response.status === 204){
