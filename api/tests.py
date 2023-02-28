@@ -85,8 +85,22 @@ class TestActor(APITestCase):
         self.base_url = 'http://127.0.0.1:8000/'
         self.my_client = RequestsClient()
         
+        self.response = self.my_client.post(f'{self.base_url}api/user/', json={
+            "email": "daniel@gmail.com",
+            "password": "mypasswordgood",
+            "password2": "mypasswordgood"
+        })
         
-        self.response = self.my_client.post(f'{self.base_url}api/actors/', json={
+        self.user = CustomUser.objects.get(id=1)
+        self.profile = self.user.profile
+        self.user_token_key = self.user.auth_token.key
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Authorization': f'Token {self.user_token_key}'
+        }
+        
+        
+        self.actor = self.my_client.post(f'{self.base_url}api/actors/', headers=self.headers, json={
             "name": "Victoria Osifo",
             "bio": "My name is Victoria Osifo.",
             "image": None
@@ -97,8 +111,21 @@ class TestActor(APITestCase):
         return super().tearDown()
     
     
-    def test_actor_created(self):
-        self.assertEqual(self.response.status_code, 201)
+    def test_actor_is_created(self):
+        self.assertEqual(self.actor.status_code, 201)
+        self.assertIsInstance(self.actor.json(), dict)
+        self.assertEqual(self.actor.json()['id'], 1)
+        self.assertEqual(self.actor.json()['name'], 'Victoria Osifo')
+        self.assertEqual(self.actor.json()['_videos'], [])
+        self.assertEqual(self.actor.json()['image'], None)
+        self.assertEqual(self.actor.json()['bio'], "My name is Victoria Osifo.")
+        
+    def test_get_actor_created(self):
+        actor = self.my_client.get(f'{self.base_url}api/actors/', headers=self.headers)
+        self.assertEqual(actor.status_code, 200)
+        self.assertIsInstance(actor.json(), list)
+        
+        # print(actor.json())
     
     
     

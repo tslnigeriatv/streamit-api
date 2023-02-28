@@ -337,10 +337,17 @@ DJOSER = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT =  587 # 465  
-EMAIL_HOST_USER ='mytslnigeria@gmail.com'
-EMAIL_HOST_PASSWORD = 'fxbsyiwvqgzypqqx'
+EMAIL_HOST_USER ='talk2peteresezobor@gmail.com'
+EMAIL_HOST_PASSWORD = 'sujmcoewhzykevey'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT =  587 # 465  
+# EMAIL_HOST_USER ='mytslnigeria@gmail.com'
+# EMAIL_HOST_PASSWORD = 'fxbsyiwvqgzypqqx'
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
 
 
 
