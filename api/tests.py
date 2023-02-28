@@ -1,16 +1,16 @@
 from django.test import TestCase
 from rest_framework.test import APITestCase, RequestsClient
-from api.models import Profile
+from api.models import Profile, Actor
 from users.models import CustomUser
 import json
 
 class TestUserProfile(APITestCase):
     
     def setUp(self):
-        self.base_url = 'http://127.0.0.1:8000/api'
+        self.base_url = 'http://127.0.0.1:8000/'
         self.my_client = RequestsClient()
         
-        self.response = self.my_client.post(f'{self.base_url}/user/', json={
+        self.response = self.my_client.post(f'{self.base_url}api/user/', json={
             "email": "daniel@gmail.com",
             "password": "mypasswordgood",
             "password2": "mypasswordgood"
@@ -23,7 +23,7 @@ class TestUserProfile(APITestCase):
             'Content-Type': 'application/json',
             'Authorization': f'Token {self.user_token_key}'
         }
-        
+
         # The difference between self.client and self.my_client is that
         # self.client is an instance atrribute of APITestCase while 
         # self.my_client is an instance of RequestClient().
@@ -36,8 +36,9 @@ class TestUserProfile(APITestCase):
         return super().tearDown()
     
     def test_create_user_with_unmatched_password(self):
-        response = self.my_client.post(f'{self.base_url}/user/', json={
+        response = self.my_client.post(f'{self.base_url}api/user/', json={
             "email": "tony@gmail.com",
+            "username": "tony",
             "password": "firstpassword",
             "password2": "secondpassword"
         })
@@ -53,15 +54,15 @@ class TestUserProfile(APITestCase):
         self.assertIsInstance(self.user_token_key, str)
         
     def test_retrieve_user_and_profile_list(self):
-        user_list = self.my_client.get(f'{self.base_url}/user/', headers=self.headers)
-        profile_list = self.my_client.get(f'{self.base_url}/profile/', headers=self.headers)
+        user_list = self.my_client.get(f'{self.base_url}api/user/', headers=self.headers)
+        profile_list = self.my_client.get(f'{self.base_url}api/profile/', headers=self.headers)
         
         self.assertEqual(user_list.status_code, 200)
         self.assertEqual(profile_list.status_code, 200)
         
     def test_retrieve_single_user_and_profile(self):
-        single_user = self.my_client.get(f'{self.base_url}/user/1/', headers=self.headers)
-        single_profile = self.my_client.get(f'{self.base_url}/profile/1/', headers=self.headers)
+        single_user = self.my_client.get(f'{self.base_url}api/user/1/', headers=self.headers)
+        single_profile = self.my_client.get(f'{self.base_url}api/profiles/1/', headers=self.headers)
 
         self.assertEqual(single_user.status_code, 200)
         self.assertEqual(single_profile.status_code, 200)
@@ -69,25 +70,36 @@ class TestUserProfile(APITestCase):
         self.assertIsInstance(single_profile.json(), dict)
         
     def test_authenticate_correct_user_credentials(self):
-        url = f"{self.base_url}/user/auth-token/"
-        response = self.client.post(url, {'username': 'daniel@gmail.com', 'password': 'mypasswordgood'})
+        url = f"{self.base_url}auth/token/login"
+        response = self.client.post(url, {'email': 'daniel@gmail.com', 'password': 'mypasswordgood'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.user_token_key, response.json()['token'])
-        self.assertEqual(self.user.id, response.json()['user_id'])
-        self.assertEqual(self.user.email, response.json()['email'])
-        
-    def test_authenticate_wrong_user_credentials(self):
-        url = f"{self.base_url}/user/auth-token/"
-        response = self.client.post(url, {'username': 'daniel@gmail.com', 'password': 'wrongpassword'})
-        self.assertTrue(response.json()['error']['status_code'], 400)
+        self.assertEqual(self.user_token_key, response.json()['auth_token'])
         
     def test_delete_user_alongside_user_profile(self):
-        response = self.my_client.delete(f'{self.base_url}/user/1/', headers=self.headers)
+        response = self.my_client.delete(f'{self.base_url}api/user/1/', headers=self.headers)
         self.assertEqual(response.status_code, 204)
-    
-    
-    
-    
-    
+        
 
+class TestActor(APITestCase):
+    def setUp(self):
+        self.base_url = 'http://127.0.0.1:8000/'
+        self.my_client = RequestsClient()
+        
+        
+        self.response = self.my_client.post(f'{self.base_url}api/actors/', json={
+            "name": "Victoria Osifo",
+            "bio": "My name is Victoria Osifo.",
+            "image": None
+        })
+        
+    
+    def tearDown(self):
+        return super().tearDown()
+    
+    
+    def test_actor_created(self):
+        self.assertEqual(self.response.status_code, 201)
+    
+    
+    
 

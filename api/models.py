@@ -7,7 +7,7 @@ from users.models import CustomUser as User
 from cloudinary_storage.storage import VideoMediaCloudinaryStorage
 from cloudinary_storage.validators import validate_video
 from .utils import all_videos
-
+from django.utils import timezone
 # Create your models here.
 
 
@@ -192,6 +192,9 @@ class Video(models.Model):
     video_like = models.ManyToManyField(User, related_name='likes', blank=True)
     favourites = models.ManyToManyField(Profile, related_name='favourites', blank=True)
     published = models.BooleanField(default=False)
+    manual_views = models.CharField(max_length=1000, blank=True, null=False)
+    has_manual_views = models.BooleanField(default=False)
+    release_date = models.DateTimeField(blank=True, null=True)
     
     class Meta:
         verbose_name_plural = "Videos"

@@ -68,8 +68,11 @@ class VideoSerializer(serializers.ModelSerializer):
             'genres',
             'published',
             "more_like_this",
+            "manual_views",
+            "has_manual_views",
             'date_uploaded', 
-            'last_modified'
+            'last_modified',
+            "release_date"
         ]
 
         
@@ -90,11 +93,9 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {
                 'write_only': True,
-                
             },
             'password2': {
                 'write_only': True,
-                
             }
         }
         

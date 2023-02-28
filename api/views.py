@@ -120,92 +120,6 @@ def profile_detail(request, *args, **kwargs):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# VideoAPIView
-# @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
-# def video_list(request):
-#     if request.method == 'GET':
-#         videos = Video.objects.all()
-#         serializer = VideoSerializer(videos, many=True)
-#         return Response(serializer.data)
-#     if request.method == 'POST':
-#         data = request.data
-#         serializer = VideoSerializer(data=data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-        
-        
-        
-
-# @api_view(['PUT', 'DELETE', 'GET'])
-# @permission_classes([IsAuthenticated])
-# def video_detail(request, *args, **kwargs):
-#     try:
-#         video = get_object_or_404(Video, pk=kwargs['pk'])
-#     except Video.DoesNotExist:
-#         return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == 'GET':
-#         serializer = VideoSerializer(video)
-#         return Response(serializer.data)
-#     if request.method == 'PUT':
-#         data = request.data
-#         serializer = VideoSerializer(video, data=data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(serializer.error, status=status.HTTP_304_NOT_MODIFIED)
-#     if request.method == 'DELETE':
-#         video.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-    
-    
-# # VideoCategoryAPIView
-# @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
-# def video_category_list(request):
-#     if request.method == 'GET':
-#         videos_cat = VideoCategory.objects.all()
-#         serializer = VideoCategorySerializer(videos_cat, many=True)
-#         return Response(serializer.data)
-#     if request.method == 'POST':
-#         data = request.data
-#         serializer = VideoCategorySerializer(data=data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['PUT', 'DELETE', 'GET'])
-# @permission_classes([IsAuthenticated])
-# def video_category_detail(request, *args, **kwargs):
-#     try:
-#         video_cat = get_object_or_404(VideoCategory, pk=kwargs['pk'])
-#     except Video.DoesNotExist:
-#         return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == 'GET':
-#         serializer = VideoCategorySerializer(video_cat)
-#         return Response(serializer.data)
-#     if request.method == 'PUT':
-#         data = request.data
-#         serializer = VideoCategorySerializer(video_cat, data=data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(serializer.error, status=status.HTTP_304_NOT_MODIFIED)
-#     if request.method == 'DELETE':
-#         video_cat.delete()
-#         return Response({"details": "Video was deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
-
-
 def hasId(model, id):
     # Firstly, iterate through all the ids in the model
     # Secondly, check if id exists in all the list of ids[]
@@ -343,15 +257,6 @@ def reset_password_confirm(request, uid, token):
 
 def reset_password_email(request):
     return render(request, 'reset_password_email.html', {})
-
-
-# class RedirectSocial(View):
-
-#     def get(self, request):
-#         code, state = str(request.GET['code']), str(request.GET['state'])
-#         json_obj = {'code': code, 'state': state}
-#         print(json_obj)
-#         return JsonResponse(json_obj)
 
 
 @api_view(['GET'])

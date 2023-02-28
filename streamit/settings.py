@@ -116,37 +116,24 @@ WSGI_APPLICATION = 'streamit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
-# My database
+# TSL Nigeria
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'railway',
 #         'USER': 'postgres',
-#         'PASSWORD': 'D4imfMoVODfTck00VEWD',
-#         'HOST': 'containers-us-west-43.railway.app',
-#         'PORT': '6946',
+#         'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
+#         'HOST': 'containers-us-west-141.railway.app',
+#         'PORT': '7108',
 #     }
 # }
-
-
-# TSL Nigeria
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
-        'HOST': 'containers-us-west-141.railway.app',
-        'PORT': '7108',
-    }
-}
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -175,24 +162,6 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
-
-# CLOUDINARY_CLOUD_NAME = 'daf9tr3lf'
-# CLOUDINARY_API_SECRET = 'Z0jk3Kw2B-YjF96-xDYKdGOa244'
-# CLOUDINARY_API_KEY = '378958482152642'
-
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': config('ENGINE'),
-#         'NAME': config('NAME'),
-#         'USER': config('USER'),
-#         'PASSWORD': config('PASSWORD'),
-#         'HOST': config('HOST'),
-#         'PORT': config('PORT'),
-#     }
-# }
 
 
 # Password validation

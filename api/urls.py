@@ -6,11 +6,7 @@ from .views import (
     user_detail, 
     profile_detail, 
     profile_list, 
-    top_trending, 
-    # video_category_detail, 
-    # video_category_list, 
-    # video_detail, 
-    # video_list,
+    top_trending,
     like_video,
     favourite_video,
     
@@ -40,17 +36,13 @@ urlpatterns = [
 
     path('profiles/', profile_list, name='profile_list'),
     path('profiles/<int:pk>/', profile_detail, name='profile_detail'),
-    # path('video/', video_list, name='video_list'),
-    # path('video/<int:pk>/', video_detail, name='video_detail'),
 
     # Likes
     path('videos/<int:pk>/likes/', like_video, name='like_video'),
+    # Favourites
     path('videos/<int:pk>/favourites/', favourite_video, name='favourite_video'),
     
     path('videos/trending/', top_trending, name='top_trending'),
-
-    # path('video/category/', video_category_list, name='video_category_list'),
-    # path('video/category/<int:pk>/', video_category_detail, name='video_category_detail'),
     
     path('profile/', redirect_socials, name="social"),
     
