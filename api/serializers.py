@@ -61,7 +61,7 @@ class VideoSerializer(serializers.ModelSerializer):
             '_category',
             'likes', 
             'actors',
-            'directors',
+            'director',
             'playlist',
             'rating',
             'mood',

@@ -209,14 +209,14 @@ class Video(models.Model):
         return result
     
     @property
-    def directors(self):
-        directors = self._director.all()
-        result = [{
-            "id": director.id,
-            "name": director.name,
-            "bio": director.bio,
-            "image": director.image.url
-        } for director in directors]
+    def director(self):
+        video_director = self._director
+        result = {
+            "id": video_director.id,
+            "name": video_director.name,
+            "bio": video_director.bio,
+            "image": video_director.image.url
+        }
         return result
     
     @property
