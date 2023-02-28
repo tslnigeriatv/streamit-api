@@ -116,24 +116,24 @@ WSGI_APPLICATION = 'streamit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# TSL Nigeria
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
-#         'HOST': 'containers-us-west-141.railway.app',
-#         'PORT': '7108',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+# TSL Nigeria
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
+        'HOST': 'containers-us-west-141.railway.app',
+        'PORT': '7108',
+    }
+}
 
 CORS_ALLOW_ALL_ORIGINS = True
 
