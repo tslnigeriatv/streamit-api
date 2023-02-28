@@ -156,7 +156,7 @@ class Video(models.Model):
     age_rating = models.IntegerField(blank=False, null=False)
     playlist = models.ForeignKey(PlayList, on_delete=models.CASCADE, blank=True, null=True, related_name='videos')
     _actors = models.ManyToManyField(Actor, related_name='actor_videos', blank=True)
-    director = models.ForeignKey(
+    _director = models.ForeignKey(
         Director, 
         on_delete=models.CASCADE, 
         related_name='video_directed', 
@@ -206,6 +206,17 @@ class Video(models.Model):
             "bio": actor.bio,
             "image": actor.image.url
         } for actor in actors]
+        return result
+    
+    @property
+    def directors(self):
+        directors = self._director.all()
+        result = [{
+            "id": director.id,
+            "name": director.name,
+            "bio": director.bio,
+            "image": director.image.url
+        } for director in directors]
         return result
     
     @property
