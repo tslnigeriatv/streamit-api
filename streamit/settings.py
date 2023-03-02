@@ -30,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["*", "web-production-de75.up.railway.app"]
+ALLOWED_HOSTS = ["*", config("HOST_ENDPOINT")]
 
 # Application definition
 
@@ -126,12 +126,12 @@ WSGI_APPLICATION = 'streamit.wsgi.application'
 # TSL Nigeria
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
-        'HOST': 'containers-us-west-141.railway.app',
-        'PORT': '7108',
+        'ENGINE': config('DATABASE_ENGINE'),
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
     }
 }
 
@@ -183,10 +183,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# CLOUDINARY_STORAGE = {
-#     'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'my-manifest-directory'),
-# }
-
 CSRF_TRUSTED_ORIGINS = ['https://web-production-93c3.up.railway.app', 'https://web-production-de75.up.railway.app']
 
 
@@ -207,53 +203,8 @@ REST_FRAMEWORK = {
 
 
 AUTHENTICATION_BACKENDS = [
-    # Others auth providers (e.g. Google, OpenId, etc)
-
-    # Facebook OAuth2
-    # 'social_core.backends.facebook.FacebookAppOAuth2',
-    # 'social_core.backends.facebook.FacebookOAuth2',
-    'api.facebook.CustomFacebookOAuth2',
-    # 'api.google.GoogleOAuth2',
-    
-    # Google OAuth2
-    'social_core.backends.google.GoogleOAuth2',
-
-
-    # drf_social_oauth2
-    'drf_social_oauth2.backends.DjangoOAuth2',
-
     # Django
     'django.contrib.auth.backends.ModelBackend',
-]
-
-
-# Facebook configuration
-SOCIAL_AUTH_FACEBOOK_KEY = '931737201320768'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'f62bd1f74bb8e2f0a6215373a70bfdea'
-
-# Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.
-# Email is not sent by default, to get it, you must request the email permission.
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, email'
-}
-
-# Google configuration
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "1039516402443-ogvmjrurbgea3nj2sdsrlv0n18vnbtie.apps.googleusercontent.com"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
-
-
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1039516402443-ogvmjrurbgea3nj2sdsrlv0n18vnbtie.apps.googleusercontent.com'
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_RAISE_EXCEPTIONS = False
-
-
-
-# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile',
-    'openid'
 ]
 
 ACTIVATE_JWT = True
@@ -296,17 +247,6 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT', 'Bearer'),
 }
 
-#  'https://auth.expo.io/@Chriscodedev/tslstream'
-white_list = [
-    'http://localhost:8000/api/profile',
-    'http://localhost:8000/api/temporary-redirect-for-testing/',
-    'http://localhost:8000/social/auth/o/google-oauth2',
-    'https://web-production-de75.up.railway.app/api/profile',
-    'https://web-production-de75.up.railway.app/social/auth/o/google-oauth2',
-    'https://web-production-de75.up.railway.app/api/temporary-redirect-for-testing/',
-    
-    
-]
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
@@ -321,7 +261,6 @@ DJOSER = {
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': white_list,
     
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserCreateSerializers',
@@ -339,20 +278,17 @@ DJOSER = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT =  587
-EMAIL_HOST_USER ='talk2peteresezobor@gmail.com'
-EMAIL_HOST_PASSWORD = 'sujmcoewhzykevey'
-EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT =  587 # 465  
-# EMAIL_HOST_USER ='mytslnigeria@gmail.com'
-# EMAIL_HOST_PASSWORD = 'fxbsyiwvqgzypqqx'
+# EMAIL_HOST_USER =''
+# EMAIL_HOST_PASSWORD = ''
 # EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
-
-
 
 
 # Internationalization
