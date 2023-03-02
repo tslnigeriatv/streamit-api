@@ -116,24 +116,24 @@ WSGI_APPLICATION = 'streamit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# TSL Nigeria
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
-        'HOST': 'containers-us-west-141.railway.app',
-        'PORT': '7108',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# TSL Nigeria
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'OWULcjVaRzjz1a4CpTAo',
+#         'HOST': 'containers-us-west-141.railway.app',
+#         'PORT': '7108',
+#     }
+# }
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -187,7 +187,7 @@ AUTH_PASSWORD_VALIDATORS = [
 #     'STATICFILES_MANIFEST_ROOT': os.path.join(BASE_DIR, 'my-manifest-directory'),
 # }
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-93c3.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-93c3.up.railway.app', 'https://web-production-de75.up.railway.app']
 
 
 REST_FRAMEWORK = {
@@ -334,13 +334,16 @@ DJOSER = {
 
 
 # EMAIL BACKEND
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT =  587 # 465  
+EMAIL_PORT =  587
 EMAIL_HOST_USER ='talk2peteresezobor@gmail.com'
 EMAIL_HOST_PASSWORD = 'sujmcoewhzykevey'
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+# EMAIL_USE_SSL = False
+
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT =  587 # 465  

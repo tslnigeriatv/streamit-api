@@ -4,8 +4,8 @@ from api.models import Profile, Actor
 from users.models import CustomUser
 import json
 
-class TestUserProfile(APITestCase):
-    
+
+class SetUpTestCase(APITestCase):
     def setUp(self):
         self.base_url = 'http://127.0.0.1:8000/'
         self.my_client = RequestsClient()
@@ -23,18 +23,36 @@ class TestUserProfile(APITestCase):
             'Content-Type': 'application/json',
             'Authorization': f'Token {self.user_token_key}'
         }
-
-        # The difference between self.client and self.my_client is that
-        # self.client is an instance atrribute of APITestCase while 
-        # self.my_client is an instance of RequestClient().
-        # Here, both of them can be used interchangeably, although the main
-        # differnce is that `headers` cannot be passed to self.client.[HTTP_METHOD]
-        # instance while they can be passed to self.my_client.[HTTP_METHOD]
-
-
+        
+        
+        self.director = self.my_client.post(f'{self.base_url}api/directors/', headers=self.headers, json={
+            "name": "Victoria Osifo",
+            "bio": "My name is Victoria Osifo.",
+            "image": None
+        })
+        
+        self.actor = self.my_client.post(f'{self.base_url}api/actors/', headers=self.headers, json={
+            "name": "Victoria Osifo",
+            "bio": "My name is Victoria Osifo.",
+            "image": None
+        })
+        
+        self.mood = self.my_client.post(f'{self.base_url}api/moods/', headers=self.headers, json={
+            "name": "Happy"
+        })
+        
+        self.category = self.my_client.post(f'{self.base_url}api/categories/', headers=self.headers, json={
+            "name": "Hot Stuff"
+        })
+        self.playlist = self.my_client.post(f'{self.base_url}api/playlists/', headers=self.headers, json={
+            "title": "My Playlist"
+        })
+        
+    
     def tearDown(self):
         return super().tearDown()
-    
+
+class TestUserProfile(SetUpTestCase):
     def test_create_user_with_unmatched_password(self):
         response = self.my_client.post(f'{self.base_url}api/user/', json={
             "email": "tony@gmail.com",
@@ -80,37 +98,7 @@ class TestUserProfile(APITestCase):
         self.assertEqual(response.status_code, 204)
         
 
-class TestActor(APITestCase):
-    def setUp(self):
-        self.base_url = 'http://127.0.0.1:8000/'
-        self.my_client = RequestsClient()
-        
-        self.response = self.my_client.post(f'{self.base_url}api/user/', json={
-            "email": "daniel@gmail.com",
-            "password": "mypasswordgood",
-            "password2": "mypasswordgood"
-        })
-        
-        self.user = CustomUser.objects.get(id=1)
-        self.profile = self.user.profile
-        self.user_token_key = self.user.auth_token.key
-        self.headers = {
-            'Content-Type': 'application/json',
-            'Authorization': f'Token {self.user_token_key}'
-        }
-        
-        
-        self.actor = self.my_client.post(f'{self.base_url}api/actors/', headers=self.headers, json={
-            "name": "Victoria Osifo",
-            "bio": "My name is Victoria Osifo.",
-            "image": None
-        })
-        
-    
-    def tearDown(self):
-        return super().tearDown()
-    
-    
+class TestActor(SetUpTestCase):
     def test_actor_is_created(self):
         self.assertEqual(self.actor.status_code, 201)
         self.assertIsInstance(self.actor.json(), dict)
@@ -124,9 +112,82 @@ class TestActor(APITestCase):
         actor = self.my_client.get(f'{self.base_url}api/actors/', headers=self.headers)
         self.assertEqual(actor.status_code, 200)
         self.assertIsInstance(actor.json(), list)
+
         
-        # print(actor.json())
-    
-    
-    
+    def test_get_single_created(self):
+        actor = self.my_client.get(f'{self.base_url}api/actors/1/', headers=self.headers)
+        self.assertEqual(actor.status_code, 200)
+        self.assertIsInstance(actor.json(), dict)
+        
+
+
+class TestDirector(SetUpTestCase):
+    def test_director_is_created(self):
+        self.assertEqual(self.director.status_code, 201)
+        self.assertIsInstance(self.director.json(), dict)
+        self.assertEqual(self.director.json()['id'], 1)
+        self.assertEqual(self.director.json()['name'], 'Victoria Osifo')
+        self.assertEqual(self.director.json()['_videos'], [])
+        self.assertEqual(self.director.json()['image'], None)
+        self.assertEqual(self.director.json()['bio'], "My name is Victoria Osifo.")
+        
+    def test_get_director_created(self):
+        director = self.my_client.get(f'{self.base_url}api/directors/', headers=self.headers)
+        self.assertEqual(director.status_code, 200)
+        self.assertIsInstance(director.json(), list)
+
+        
+    def test_get_single_created(self):
+        director = self.my_client.get(f'{self.base_url}api/directors/1/', headers=self.headers)
+        self.assertEqual(director.status_code, 200)
+        self.assertIsInstance(director.json(), dict)
+
+
+class TestMood(SetUpTestCase):
+    def test_mood_is_created(self):
+        self.assertEqual(self.mood.status_code, 201)
+        self.assertEqual(self.mood.json()['id'], 1)
+        self.assertEqual(self.mood.json()['name'], "Happy")
+        self.assertEqual(self.mood.json()['_videos'], [])
+        self.assertIsInstance(self.mood.json()['_videos'], list)
+        
+    def test_get_all_mood_created(self):
+        mood = self.my_client.get(f'{self.base_url}api/moods/', headers=self.headers)
+        self.assertEqual(mood.status_code, 200)
+        self.assertIsInstance(mood.json(), list)
+        
+        
+    def test_get_single_mood_created(self):
+        mood = self.my_client.get(f'{self.base_url}api/moods/1/', headers=self.headers)
+        self.assertEqual(mood.status_code, 200)
+        self.assertEqual(mood.json()['id'], 1)
+        self.assertEqual(mood.json()['name'], 'Happy')
+        self.assertEqual(mood.json()['_videos'], [])
+        
+
+class TestVideoCategory(SetUpTestCase):
+    def test_video_category_created(self):
+        self.assertEqual(self.category.status_code, 201)
+        self.assertEqual(self.category.json()['id'], 1)
+        self.assertEqual(self.category.json()['name'], 'Hot Stuff')
+        self.assertEqual(self.category.json()['videos'], [])
+        
+    def test_get_all_video_category(self):
+        category = self.my_client.get(f'{self.base_url}api/categories/', headers=self.headers)
+        self.assertEqual(category.status_code, 200)
+        self.assertIsInstance(category.json(), list)
+        
+    def test_get_single_video_category(self):
+        category = self.my_client.get(f'{self.base_url}api/categories/1/', headers=self.headers)
+        self.assertEqual(category.status_code, 200)
+        self.assertIsInstance(category.json(), dict)
+
+class TestVideoPlayList(SetUpTestCase):
+    def test_video_category_created(self):
+        self.assertEqual(self.playlist.status_code, 201)
+        # self.assertEqual(self.category.json()['id'], 1)
+        # self.assertEqual(self.category.json()['name'], 'Hot Stuff')
+        # self.assertEqual(self.category.json()['videos'], [])
+        pass
+
 
