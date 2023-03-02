@@ -7,7 +7,7 @@ The API has a couple of endpoints that gives you access to the database. The bas
 ### Base URL
 
 ```
-https://web-production-93c3.up.railway.app/
+https://web-production-de75.up.railway.app/
 ```
 
 Note that every endpoint must have an ending slash. This shows that it is an absolute URL. With the base URL above, requests can be made to various endpoints.
