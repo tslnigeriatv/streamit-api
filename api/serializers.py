@@ -37,12 +37,30 @@ class MoodSerializer(serializers.ModelSerializer):
 class ActorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actor
-        fields = ['id', 'name', 'bio', 'image', '_videos']
+        fields = [
+            'id', 
+            'name',
+            'bio', 
+            'image', 
+            'born', 
+            'education', 
+            'cast_position', 
+            '_videos'
+        ]
         
 class DirectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Director
-        fields = ['id', 'name','bio', 'image', '_videos']
+        fields = [
+            'id', 
+            'name',
+            'bio', 
+            'image', 
+            'born', 
+            'education', 
+            'cast_position', 
+            '_videos'
+        ]
         
 
 

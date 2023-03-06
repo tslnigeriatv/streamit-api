@@ -63,6 +63,9 @@ class Actor(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False)
     bio = models.TextField(max_length=500, blank=False, null=False)
     image = models.ImageField(upload_to='profile/actors/', blank=False, null=True)
+    born = models.CharField(max_length=900, blank=True, null=True)
+    education = models.CharField(max_length=900, blank=True, null=True)
+    cast_position = models.CharField(max_length=100, blank=True, null=True)
     
     class Meta:
         verbose_name_plural = "Actors"
@@ -80,6 +83,9 @@ class Director(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False)
     bio = models.TextField(max_length=500, blank=True, null=True)
     image = models.ImageField(upload_to='profile/director/', blank=False, null=True)
+    born = models.CharField(max_length=900, blank=True, null=True)
+    education = models.CharField(max_length=900, blank=True, null=True)
+    cast_position = models.CharField(max_length=100, blank=True, null=True)
     
     class Meta:
         verbose_name_plural = "Directors"
