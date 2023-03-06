@@ -66,6 +66,13 @@ def all_videos(videos):
     my_videos = [{
         "id": video.id, 
         "title": video.title,
+        "description": video.description,
+        "director": {
+            "id": video._director.id,
+            "name":video._director.name,
+            "bio": video._director.bio,
+            "image": video._director.image.url
+        },
         "video_link": video.video_link,
         "category": video.category.name,
         "age_rating": video.rating,

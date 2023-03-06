@@ -210,7 +210,7 @@ class VideoCategoryViewSet(viewsets.ModelViewSet):
 class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
@@ -232,7 +232,7 @@ class PlayListViewSet(viewsets.ModelViewSet):
 class DirectorViewSet(viewsets.ModelViewSet):
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     
 @api_view(['GET'])
