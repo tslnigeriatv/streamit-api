@@ -87,7 +87,12 @@ def all_videos(videos):
         "category": video._category,
         "date_uploaded": video.date_uploaded,
         "last_modified": video.last_modified,
-        "published": video.published
+        # Added new attributes here...
+        "published": video.published,
+        "manual_views": video.manual_views,
+        "has_manual_views": video.has_manual_views,
+        "release_date": video.release_date,
+        
     } for video in videos]
 
     return my_videos
