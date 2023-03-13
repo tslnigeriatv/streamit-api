@@ -87,8 +87,7 @@ def all_videos(videos):
         "category": video._category,
         "date_uploaded": video.date_uploaded,
         "last_modified": video.last_modified,
-        "published": video.published,
-        "more_like_this": video.more_like_this
+        "published": video.published
     } for video in videos]
 
     return my_videos
