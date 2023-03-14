@@ -17,6 +17,7 @@ from .views import (
     PlayListViewSet,
     VideoCategoryViewSet,
     VideoViewSet,
+    ChangePasswordView,
     
     redirect_socials
 )
@@ -47,6 +48,10 @@ urlpatterns = [
     path('profile/', redirect_socials, name="social"),
     
     path('temporary-redirect-for-testing/', redirect_socials, name="social"),
+    
+    
+    # Change Password
+    path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     
 ]
 urlpatterns += router.urls
